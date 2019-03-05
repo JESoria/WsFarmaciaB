@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="1a2c887f2bba4b3dac6e25f4a85f9cde" Name="Diagram1">
+        <EntityTypeShape EntityType="FarmaciaBModel.CATEGORIA" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="FarmaciaBModel.LABORATORIO" Width="1.5" PointX="0.75" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="FarmaciaBModel.PRESENTACION" Width="1.5" PointX="0.75" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="FarmaciaBModel.PRODUCTO" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="FarmaciaBModel.SUCURSAL" Width="1.5" PointX="3" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="FarmaciaBModel.SUCURSAL_PRODUCTO" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
+        <AssociationConnector Association="FarmaciaBModel.FK_PRODUCTO_CATEGORIA" ManuallyRouted="false" />
+        <AssociationConnector Association="FarmaciaBModel.FK_PRODUCTO_LABORATORIO" ManuallyRouted="false" />
+        <AssociationConnector Association="FarmaciaBModel.FK_PRODUCTO_PRESENTACION" ManuallyRouted="false" />
+        <AssociationConnector Association="FarmaciaBModel.FK_PRODUCTO_SUCURSAL_PRODUCTO" ManuallyRouted="false" />
+        <AssociationConnector Association="FarmaciaBModel.FK_SUCURSAL_SUCURSAL_PRODUCTO" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="FarmaciaBModel.FARMACIA" Width="1.5" PointX="3.375" PointY="4.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
