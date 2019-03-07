@@ -29,6 +29,12 @@ namespace FarmaciaB
                 );
 
             config.Routes.MapHttpRoute(
+            name: "SearchByDrugstore",
+            routeTemplate: "api/SearchByDrugstore",
+            defaults: new { Controller = "SearchByDrugstore", Action = "SearchDrugstore" }
+            );
+
+            config.Routes.MapHttpRoute(
                 name: "Detail",
                 routeTemplate: "api/Detail",
                 defaults: new { Controller = "Detail", Action = "ProductDetail" }

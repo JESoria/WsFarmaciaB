@@ -14,7 +14,7 @@ namespace FarmaciaB.Controllers
         [HttpPost]
         public async Task<IHttpActionResult> ProductDetail(ProductSearchModel data)
         {
-            List<DetailModel> detalle = new List<DetailModel>();
+            DetailModel detalle = null;
 
             using (FarmaciaBEntities db = new FarmaciaBEntities())
             {
@@ -24,7 +24,7 @@ namespace FarmaciaB.Controllers
                             db.CATEGORIA.Where(c => c.ID_CATEGORIA == y.ID_CATEGORIA).ToList().ForEach(c => {
                                 db.LABORATORIO.Where(l => l.ID_LABORATORIO == y.ID_LABORATORIO).ToList().ForEach(l =>
                                 {
-                                    detalle.Add(new DetailModel()
+                                    detalle = new DetailModel()
                                     {
                                         producto = y.PRODUCTO1,
                                         presentacion = z.PRESENTACION1,
@@ -34,7 +34,7 @@ namespace FarmaciaB.Controllers
                                         categoria = c.CATEGORIA1,
                                         precio = Convert.ToDouble(x.PRECIO),
                                         existencia = x.EXISTENCIA
-                                    });
+                                    };
                                 });
                             });
                         });
