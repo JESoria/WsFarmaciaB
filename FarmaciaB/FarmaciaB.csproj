@@ -282,6 +282,7 @@
     <Content Include="Models\FarmaBModel.edmx.diagram">
       <DependentUpon>FarmaBModel.edmx</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\FarmaciaB20190312071435 - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

@@ -1,0 +1,168 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="FarmaciaBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="CATEGORIA">
+    <Key>
+      <PropertyRef Name="ID_CATEGORIA" />
+    </Key>
+    <Property Name="ID_CATEGORIA" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CATEGORIA" Type="varchar" MaxLength="64" Nullable="false" />
+    <Property Name="DESCRIPCION" Type="varchar" MaxLength="256" />
+  </EntityType>
+  <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'FarmaciaB.dbo.FARMACIA' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+  <EntityType Name="FARMACIA">
+    <Key>
+      <PropertyRef Name="ID_FARMACIA" />
+    </Key>
+    <Property Name="ID_FARMACIA" Type="int" Nullable="false" />
+    <Property Name="NOMBRE_FARMACIA" Type="varchar" MaxLength="256" />
+    <Property Name="ATENCION_AL_CLIENTE" Type="varchar" MaxLength="50" />
+    <Property Name="PAGINA_WEB" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="LABORATORIO">
+    <Key>
+      <PropertyRef Name="ID_LABORATORIO" />
+    </Key>
+    <Property Name="ID_LABORATORIO" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LABORATORIO" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="TITULAR" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="PRESENTACION">
+    <Key>
+      <PropertyRef Name="ID_PRESENTACION" />
+    </Key>
+    <Property Name="ID_PRESENTACION" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PRESENTACION" Type="varchar" MaxLength="128" Nullable="false" />
+    <Property Name="DESCRIPCION" Type="varchar" MaxLength="256" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PRODUCTO">
+    <Key>
+      <PropertyRef Name="ID_PRODUCTO" />
+    </Key>
+    <Property Name="ID_PRODUCTO" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID_PRESENTACION" Type="int" />
+    <Property Name="ID_CATEGORIA" Type="int" />
+    <Property Name="ID_LABORATORIO" Type="int" />
+    <Property Name="PRODUCTO" Type="nvarchar(max)" />
+    <Property Name="DESCRIPCION" Type="nvarchar(max)" />
+    <Property Name="IMAGEN_PRODUCTO" Type="image" />
+  </EntityType>
+  <EntityType Name="SUCURSAL">
+    <Key>
+      <PropertyRef Name="ID_SUCURSAL" />
+    </Key>
+    <Property Name="ID_SUCURSAL" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SUCURSAL" Type="varchar" MaxLength="64" Nullable="false" />
+    <Property Name="DIRECCION" Type="varchar" MaxLength="256" Nullable="false" />
+    <Property Name="LONGITUD" Type="varchar" MaxLength="128" Nullable="false" />
+    <Property Name="LATITUD" Type="varchar" MaxLength="128" Nullable="false" />
+    <Property Name="TELEFONO" Type="varchar" MaxLength="10" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SUCURSAL_PRODUCTO">
+    <Key>
+      <PropertyRef Name="ID_SUCURSAL_PRODUCTO" />
+    </Key>
+    <Property Name="ID_SUCURSAL_PRODUCTO" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID_SUCURSAL" Type="int" Nullable="false" />
+    <Property Name="ID_PRODUCTO" Type="int" Nullable="false" />
+    <Property Name="FECHA_VENCIMIENTO" Type="date" Nullable="false" />
+    <Property Name="EXISTENCIA" Type="int" Nullable="false" />
+    <Property Name="PRECIO" Type="decimal" Precision="7" Scale="2" />
+  </EntityType>
+  <Association Name="FK_PRODUCTO_CATEGORIA">
+    <End Role="CATEGORIA" Type="Self.CATEGORIA" Multiplicity="0..1" />
+    <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CATEGORIA">
+        <PropertyRef Name="ID_CATEGORIA" />
+      </Principal>
+      <Dependent Role="PRODUCTO">
+        <PropertyRef Name="ID_CATEGORIA" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PRODUCTO_LABORATORIO">
+    <End Role="LABORATORIO" Type="Self.LABORATORIO" Multiplicity="0..1" />
+    <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LABORATORIO">
+        <PropertyRef Name="ID_LABORATORIO" />
+      </Principal>
+      <Dependent Role="PRODUCTO">
+        <PropertyRef Name="ID_LABORATORIO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PRODUCTO_PRESENTACION">
+    <End Role="PRESENTACION" Type="Self.PRESENTACION" Multiplicity="0..1" />
+    <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PRESENTACION">
+        <PropertyRef Name="ID_PRESENTACION" />
+      </Principal>
+      <Dependent Role="PRODUCTO">
+        <PropertyRef Name="ID_PRESENTACION" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PRODUCTO_SUCURSAL_PRODUCTO">
+    <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="1" />
+    <End Role="SUCURSAL_PRODUCTO" Type="Self.SUCURSAL_PRODUCTO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PRODUCTO">
+        <PropertyRef Name="ID_PRODUCTO" />
+      </Principal>
+      <Dependent Role="SUCURSAL_PRODUCTO">
+        <PropertyRef Name="ID_PRODUCTO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SUCURSAL_SUCURSAL_PRODUCTO">
+    <End Role="SUCURSAL" Type="Self.SUCURSAL" Multiplicity="1" />
+    <End Role="SUCURSAL_PRODUCTO" Type="Self.SUCURSAL_PRODUCTO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SUCURSAL">
+        <PropertyRef Name="ID_SUCURSAL" />
+      </Principal>
+      <Dependent Role="SUCURSAL_PRODUCTO">
+        <PropertyRef Name="ID_SUCURSAL" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="FarmaciaBModelStoreContainer">
+    <EntitySet Name="CATEGORIA" EntityType="Self.CATEGORIA" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LABORATORIO" EntityType="Self.LABORATORIO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PRESENTACION" EntityType="Self.PRESENTACION" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PRODUCTO" EntityType="Self.PRODUCTO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SUCURSAL" EntityType="Self.SUCURSAL" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SUCURSAL_PRODUCTO" EntityType="Self.SUCURSAL_PRODUCTO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="FARMACIA" EntityType="Self.FARMACIA" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [FARMACIA].[ID_FARMACIA] AS [ID_FARMACIA], 
+    [FARMACIA].[NOMBRE_FARMACIA] AS [NOMBRE_FARMACIA], 
+    [FARMACIA].[ATENCION_AL_CLIENTE] AS [ATENCION_AL_CLIENTE], 
+    [FARMACIA].[PAGINA_WEB] AS [PAGINA_WEB]
+    FROM [dbo].[FARMACIA] AS [FARMACIA]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_PRODUCTO_CATEGORIA" Association="Self.FK_PRODUCTO_CATEGORIA">
+      <End Role="CATEGORIA" EntitySet="CATEGORIA" />
+      <End Role="PRODUCTO" EntitySet="PRODUCTO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PRODUCTO_LABORATORIO" Association="Self.FK_PRODUCTO_LABORATORIO">
+      <End Role="LABORATORIO" EntitySet="LABORATORIO" />
+      <End Role="PRODUCTO" EntitySet="PRODUCTO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PRODUCTO_PRESENTACION" Association="Self.FK_PRODUCTO_PRESENTACION">
+      <End Role="PRESENTACION" EntitySet="PRESENTACION" />
+      <End Role="PRODUCTO" EntitySet="PRODUCTO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PRODUCTO_SUCURSAL_PRODUCTO" Association="Self.FK_PRODUCTO_SUCURSAL_PRODUCTO">
+      <End Role="PRODUCTO" EntitySet="PRODUCTO" />
+      <End Role="SUCURSAL_PRODUCTO" EntitySet="SUCURSAL_PRODUCTO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SUCURSAL_SUCURSAL_PRODUCTO" Association="Self.FK_SUCURSAL_SUCURSAL_PRODUCTO">
+      <End Role="SUCURSAL" EntitySet="SUCURSAL" />
+      <End Role="SUCURSAL_PRODUCTO" EntitySet="SUCURSAL_PRODUCTO" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
