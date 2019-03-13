@@ -31,6 +31,7 @@
     <EntitySetMapping Name="PRODUCTO">
       <EntityTypeMapping TypeName="FarmaciaBModel.PRODUCTO">
         <MappingFragment StoreEntitySet="PRODUCTO">
+          <ScalarProperty Name="IMAGEN_PRODUCTO" ColumnName="IMAGEN_PRODUCTO" />
           <ScalarProperty Name="ID_PRODUCTO" ColumnName="ID_PRODUCTO" />
           <ScalarProperty Name="ID_PRESENTACION" ColumnName="ID_PRESENTACION" />
           <ScalarProperty Name="ID_CATEGORIA" ColumnName="ID_CATEGORIA" />

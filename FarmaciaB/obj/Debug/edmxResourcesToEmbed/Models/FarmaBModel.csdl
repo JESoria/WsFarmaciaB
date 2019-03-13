@@ -41,6 +41,7 @@
     <NavigationProperty Name="LABORATORIO" Relationship="Self.FK_PRODUCTO_LABORATORIO" FromRole="PRODUCTO" ToRole="LABORATORIO" />
     <NavigationProperty Name="PRESENTACION" Relationship="Self.FK_PRODUCTO_PRESENTACION" FromRole="PRODUCTO" ToRole="PRESENTACION" />
     <NavigationProperty Name="SUCURSAL_PRODUCTO" Relationship="Self.FK_PRODUCTO_SUCURSAL_PRODUCTO" FromRole="PRODUCTO" ToRole="SUCURSAL_PRODUCTO" />
+    <Property Name="IMAGEN_PRODUCTO" Type="Binary" MaxLength="Max" FixedLength="false" />
   </EntityType>
   <EntityType Name="SUCURSAL">
     <Key>

@@ -45,6 +45,7 @@ advertencia 6002: La tabla o vista 'FarmaciaB.dbo.FARMACIA' no tiene definida ni
     <Property Name="ID_LABORATORIO" Type="int" />
     <Property Name="PRODUCTO" Type="nvarchar(max)" />
     <Property Name="DESCRIPCION" Type="nvarchar(max)" />
+    <Property Name="IMAGEN_PRODUCTO" Type="image" />
   </EntityType>
   <EntityType Name="SUCURSAL">
     <Key>

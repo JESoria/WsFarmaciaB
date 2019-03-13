@@ -26,6 +26,7 @@ namespace FarmaciaB.Models
         public Nullable<int> ID_LABORATORIO { get; set; }
         public string PRODUCTO1 { get; set; }
         public string DESCRIPCION { get; set; }
+        public byte[] IMAGEN_PRODUCTO { get; set; }
     
         public virtual CATEGORIA CATEGORIA { get; set; }
         public virtual LABORATORIO LABORATORIO { get; set; }
