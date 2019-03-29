@@ -11,6 +11,7 @@ namespace FarmaciaB.Models
         public double latitud { get; set; }
         public double longitud { get; set; }
         public int idSucursal { get; set; }
+        public double distance { get; set; }
 
         public static double Distance(double lat1, double lon1, double lat2, double lon2)
         {

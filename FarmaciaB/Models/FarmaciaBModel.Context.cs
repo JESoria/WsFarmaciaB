@@ -29,8 +29,10 @@ namespace FarmaciaB.Models
         public virtual DbSet<LABORATORIO> LABORATORIO { get; set; }
         public virtual DbSet<PRESENTACION> PRESENTACION { get; set; }
         public virtual DbSet<PRODUCTO> PRODUCTO { get; set; }
-        public virtual DbSet<SUCURSAL> SUCURSAL { get; set; }
         public virtual DbSet<SUCURSAL_PRODUCTO> SUCURSAL_PRODUCTO { get; set; }
+        public virtual DbSet<t_oauthtoken> t_oauthtoken { get; set; }
         public virtual DbSet<FARMACIA> FARMACIA { get; set; }
+        public virtual DbSet<SUCURSAL> SUCURSAL { get; set; }
+        public virtual DbSet<database_firewall_rules> database_firewall_rules { get; set; }
     }
 }

@@ -194,43 +194,49 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\CATEGORIA.cs">
-      <DependentUpon>FarmaBModel.tt</DependentUpon>
+      <DependentUpon>FarmaciaBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\database_firewall_rules.cs">
+      <DependentUpon>FarmaciaBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DetailModel.cs" />
-    <Compile Include="Models\FarmaBModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>FarmaBModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\FarmaBModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>FarmaBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\FarmaBModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>FarmaBModel.edmx</DependentUpon>
-    </Compile>
     <Compile Include="Models\FARMACIA.cs">
-      <DependentUpon>FarmaBModel.tt</DependentUpon>
+      <DependentUpon>FarmaciaBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FarmaciaBModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FarmaciaBModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FarmaciaBModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FarmaciaBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FarmaciaBModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FarmaciaBModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\LABORATORIO.cs">
-      <DependentUpon>FarmaBModel.tt</DependentUpon>
+      <DependentUpon>FarmaciaBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PRESENTACION.cs">
-      <DependentUpon>FarmaBModel.tt</DependentUpon>
+      <DependentUpon>FarmaciaBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PRODUCTO.cs">
-      <DependentUpon>FarmaBModel.tt</DependentUpon>
+      <DependentUpon>FarmaciaBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ProductSearchModel.cs" />
     <Compile Include="Models\SearchModel.cs" />
     <Compile Include="Models\SUCURSAL.cs">
-      <DependentUpon>FarmaBModel.tt</DependentUpon>
+      <DependentUpon>FarmaciaBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SUCURSAL_PRODUCTO.cs">
-      <DependentUpon>FarmaBModel.tt</DependentUpon>
+      <DependentUpon>FarmaciaBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\t_oauthtoken.cs">
+      <DependentUpon>FarmaciaBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -241,15 +247,15 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Models\FarmaBModel.Context.tt">
+    <Content Include="Models\FarmaciaBModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>FarmaBModel.Context.cs</LastGenOutput>
-      <DependentUpon>FarmaBModel.edmx</DependentUpon>
+      <DependentUpon>FarmaciaBModel.edmx</DependentUpon>
+      <LastGenOutput>FarmaciaBModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\FarmaBModel.tt">
+    <Content Include="Models\FarmaciaBModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>FarmaBModel.edmx</DependentUpon>
-      <LastGenOutput>FarmaBModel.cs</LastGenOutput>
+      <DependentUpon>FarmaciaBModel.edmx</DependentUpon>
+      <LastGenOutput>FarmaciaBModel.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -275,12 +281,12 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <EntityDeploy Include="Models\FarmaBModel.edmx">
+    <EntityDeploy Include="Models\FarmaciaBModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>FarmaBModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>FarmaciaBModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\FarmaBModel.edmx.diagram">
-      <DependentUpon>FarmaBModel.edmx</DependentUpon>
+    <Content Include="Models\FarmaciaBModel.edmx.diagram">
+      <DependentUpon>FarmaciaBModel.edmx</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\FarmaciaB20190312071435 - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />

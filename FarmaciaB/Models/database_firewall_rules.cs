@@ -12,13 +12,13 @@ namespace FarmaciaB.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class SUCURSAL
+    public partial class database_firewall_rules
     {
-        public int ID_SUCURSAL { get; set; }
-        public string SUCURSAL1 { get; set; }
-        public string DIRECCION { get; set; }
-        public string LONGITUD { get; set; }
-        public string LATITUD { get; set; }
-        public string TELEFONO { get; set; }
+        public int id { get; set; }
+        public string name { get; set; }
+        public string start_ip_address { get; set; }
+        public string end_ip_address { get; set; }
+        public System.DateTime create_date { get; set; }
+        public System.DateTime modify_date { get; set; }
     }
 }

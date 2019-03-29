@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="FarmaciaBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+<Schema Namespace="FarmaciaBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityType Name="CATEGORIA">
     <Key>
       <PropertyRef Name="ID_CATEGORIA" />
@@ -52,6 +52,11 @@ advertencia 6002: La tabla o vista 'FarmaciaB.dbo.SUCURSAL' no tiene definida ni
   <EntityType Name="SUCURSAL">
     <Key>
       <PropertyRef Name="ID_SUCURSAL" />
+      <PropertyRef Name="SUCURSAL" />
+      <PropertyRef Name="DIRECCION" />
+      <PropertyRef Name="LONGITUD" />
+      <PropertyRef Name="LATITUD" />
+      <PropertyRef Name="TELEFONO" />
     </Key>
     <Property Name="ID_SUCURSAL" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="SUCURSAL" Type="varchar" MaxLength="64" Nullable="false" />

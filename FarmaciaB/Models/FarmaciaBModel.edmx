@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="FarmaciaBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="FarmaciaBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="CATEGORIA">
           <Key>
             <PropertyRef Name="ID_CATEGORIA" />
@@ -52,9 +52,16 @@ advertencia 6002: La tabla o vista 'FarmaciaB.dbo.FARMACIA' no tiene definida ni
           <Property Name="DESCRIPCION" Type="nvarchar(max)" />
           <Property Name="IMAGEN_PRODUCTO" Type="image" />
         </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'FarmaciaB.dbo.SUCURSAL' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="SUCURSAL">
           <Key>
             <PropertyRef Name="ID_SUCURSAL" />
+            <PropertyRef Name="SUCURSAL" />
+            <PropertyRef Name="DIRECCION" />
+            <PropertyRef Name="LONGITUD" />
+            <PropertyRef Name="LATITUD" />
+            <PropertyRef Name="TELEFONO" />
           </Key>
           <Property Name="ID_SUCURSAL" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="SUCURSAL" Type="varchar" MaxLength="64" Nullable="false" />
@@ -74,6 +81,70 @@ advertencia 6002: La tabla o vista 'FarmaciaB.dbo.FARMACIA' no tiene definida ni
           <Property Name="EXISTENCIA" Type="int" Nullable="false" />
           <Property Name="PRECIO" Type="decimal" Precision="7" Scale="2" />
         </EntityType>
+        <EntityType Name="t_oauthtoken">
+          <Key>
+            <PropertyRef Name="authtoken_id" />
+          </Key>
+          <Property Name="authtoken_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="sender_id" Type="varchar" MaxLength="450" />
+          <Property Name="outh_name" Type="varchar(max)" />
+          <Property Name="token" Type="varchar(max)" />
+          <Property Name="date" Type="datetime" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'FarmaciaB.sys.database_firewall_rules' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="database_firewall_rules">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="start_ip_address" />
+            <PropertyRef Name="end_ip_address" />
+            <PropertyRef Name="create_date" />
+            <PropertyRef Name="modify_date" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="start_ip_address" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="end_ip_address" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="create_date" Type="datetime" Nullable="false" />
+          <Property Name="modify_date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__PRODUCTO__ID_CAT__5812160E">
+          <End Role="CATEGORIA" Type="Self.CATEGORIA" Multiplicity="0..1" />
+          <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CATEGORIA">
+              <PropertyRef Name="ID_CATEGORIA" />
+            </Principal>
+            <Dependent Role="PRODUCTO">
+              <PropertyRef Name="ID_CATEGORIA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PRODUCTO__ID_LAB__59063A47">
+          <End Role="LABORATORIO" Type="Self.LABORATORIO" Multiplicity="0..1" />
+          <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LABORATORIO">
+              <PropertyRef Name="ID_LABORATORIO" />
+            </Principal>
+            <Dependent Role="PRODUCTO">
+              <PropertyRef Name="ID_LABORATORIO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PRODUCTO__ID_PRE__571DF1D5">
+          <End Role="PRESENTACION" Type="Self.PRESENTACION" Multiplicity="0..1" />
+          <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRESENTACION">
+              <PropertyRef Name="ID_PRESENTACION" />
+            </Principal>
+            <Dependent Role="PRODUCTO">
+              <PropertyRef Name="ID_PRESENTACION" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PRODUCTO_CATEGORIA">
           <End Role="CATEGORIA" Type="Self.CATEGORIA" Multiplicity="0..1" />
           <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="*" />
@@ -110,37 +181,22 @@ advertencia 6002: La tabla o vista 'FarmaciaB.dbo.FARMACIA' no tiene definida ni
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PRODUCTO_SUCURSAL_PRODUCTO">
-          <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="1" />
-          <End Role="SUCURSAL_PRODUCTO" Type="Self.SUCURSAL_PRODUCTO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PRODUCTO">
-              <PropertyRef Name="ID_PRODUCTO" />
-            </Principal>
-            <Dependent Role="SUCURSAL_PRODUCTO">
-              <PropertyRef Name="ID_PRODUCTO" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SUCURSAL_SUCURSAL_PRODUCTO">
-          <End Role="SUCURSAL" Type="Self.SUCURSAL" Multiplicity="1" />
-          <End Role="SUCURSAL_PRODUCTO" Type="Self.SUCURSAL_PRODUCTO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SUCURSAL">
-              <PropertyRef Name="ID_SUCURSAL" />
-            </Principal>
-            <Dependent Role="SUCURSAL_PRODUCTO">
-              <PropertyRef Name="ID_SUCURSAL" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+        <Function Name="deg2rad" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="float">
+          <Parameter Name="deg" Type="float" Mode="In" />
+        </Function>
+        <Function Name="DistanceFromLatLonInKm" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="float">
+          <Parameter Name="lon1" Type="float" Mode="In" />
+          <Parameter Name="lat1" Type="float" Mode="In" />
+          <Parameter Name="lon2" Type="float" Mode="In" />
+          <Parameter Name="lat2" Type="float" Mode="In" />
+        </Function>
         <EntityContainer Name="FarmaciaBModelStoreContainer">
           <EntitySet Name="CATEGORIA" EntityType="Self.CATEGORIA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LABORATORIO" EntityType="Self.LABORATORIO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PRESENTACION" EntityType="Self.PRESENTACION" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PRODUCTO" EntityType="Self.PRODUCTO" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="SUCURSAL" EntityType="Self.SUCURSAL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SUCURSAL_PRODUCTO" EntityType="Self.SUCURSAL_PRODUCTO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="t_oauthtoken" EntityType="Self.t_oauthtoken" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FARMACIA" EntityType="Self.FARMACIA" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [FARMACIA].[ID_FARMACIA] AS [ID_FARMACIA], 
@@ -149,6 +205,38 @@ advertencia 6002: La tabla o vista 'FarmaciaB.dbo.FARMACIA' no tiene definida ni
     [FARMACIA].[PAGINA_WEB] AS [PAGINA_WEB]
     FROM [dbo].[FARMACIA] AS [FARMACIA]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="SUCURSAL" EntityType="Self.SUCURSAL" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [SUCURSAL].[ID_SUCURSAL] AS [ID_SUCURSAL], 
+    [SUCURSAL].[SUCURSAL] AS [SUCURSAL], 
+    [SUCURSAL].[DIRECCION] AS [DIRECCION], 
+    [SUCURSAL].[LONGITUD] AS [LONGITUD], 
+    [SUCURSAL].[LATITUD] AS [LATITUD], 
+    [SUCURSAL].[TELEFONO] AS [TELEFONO]
+    FROM [dbo].[SUCURSAL] AS [SUCURSAL]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="database_firewall_rules" EntityType="Self.database_firewall_rules" store:Type="Views" store:Schema="sys">
+            <DefiningQuery>SELECT 
+    [database_firewall_rules].[id] AS [id], 
+    [database_firewall_rules].[name] AS [name], 
+    [database_firewall_rules].[start_ip_address] AS [start_ip_address], 
+    [database_firewall_rules].[end_ip_address] AS [end_ip_address], 
+    [database_firewall_rules].[create_date] AS [create_date], 
+    [database_firewall_rules].[modify_date] AS [modify_date]
+    FROM [sys].[database_firewall_rules] AS [database_firewall_rules]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__PRODUCTO__ID_CAT__5812160E" Association="Self.FK__PRODUCTO__ID_CAT__5812160E">
+            <End Role="CATEGORIA" EntitySet="CATEGORIA" />
+            <End Role="PRODUCTO" EntitySet="PRODUCTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PRODUCTO__ID_LAB__59063A47" Association="Self.FK__PRODUCTO__ID_LAB__59063A47">
+            <End Role="LABORATORIO" EntitySet="LABORATORIO" />
+            <End Role="PRODUCTO" EntitySet="PRODUCTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PRODUCTO__ID_PRE__571DF1D5" Association="Self.FK__PRODUCTO__ID_PRE__571DF1D5">
+            <End Role="PRESENTACION" EntitySet="PRESENTACION" />
+            <End Role="PRODUCTO" EntitySet="PRODUCTO" />
+          </AssociationSet>
           <AssociationSet Name="FK_PRODUCTO_CATEGORIA" Association="Self.FK_PRODUCTO_CATEGORIA">
             <End Role="CATEGORIA" EntitySet="CATEGORIA" />
             <End Role="PRODUCTO" EntitySet="PRODUCTO" />
@@ -161,16 +249,9 @@ advertencia 6002: La tabla o vista 'FarmaciaB.dbo.FARMACIA' no tiene definida ni
             <End Role="PRESENTACION" EntitySet="PRESENTACION" />
             <End Role="PRODUCTO" EntitySet="PRODUCTO" />
           </AssociationSet>
-          <AssociationSet Name="FK_PRODUCTO_SUCURSAL_PRODUCTO" Association="Self.FK_PRODUCTO_SUCURSAL_PRODUCTO">
-            <End Role="PRODUCTO" EntitySet="PRODUCTO" />
-            <End Role="SUCURSAL_PRODUCTO" EntitySet="SUCURSAL_PRODUCTO" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SUCURSAL_SUCURSAL_PRODUCTO" Association="Self.FK_SUCURSAL_SUCURSAL_PRODUCTO">
-            <End Role="SUCURSAL" EntitySet="SUCURSAL" />
-            <End Role="SUCURSAL_PRODUCTO" EntitySet="SUCURSAL_PRODUCTO" />
-          </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="FarmaciaBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -181,7 +262,8 @@ advertencia 6002: La tabla o vista 'FarmaciaB.dbo.FARMACIA' no tiene definida ni
           <Property Name="ID_CATEGORIA" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CATEGORIA1" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="DESCRIPCION" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="PRODUCTO" Relationship="Self.FK_PRODUCTO_CATEGORIA" FromRole="CATEGORIA" ToRole="PRODUCTO" />
+          <NavigationProperty Name="PRODUCTO" Relationship="Self.FK__PRODUCTO__ID_CAT__5812160E" FromRole="CATEGORIA" ToRole="PRODUCTO" />
+          <NavigationProperty Name="PRODUCTO1" Relationship="Self.FK_PRODUCTO_CATEGORIA" FromRole="CATEGORIA" ToRole="PRODUCTO" />
         </EntityType>
         <EntityType Name="LABORATORIO">
           <Key>
@@ -190,7 +272,8 @@ advertencia 6002: La tabla o vista 'FarmaciaB.dbo.FARMACIA' no tiene definida ni
           <Property Name="ID_LABORATORIO" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="LABORATORIO1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="TITULAR" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="PRODUCTO" Relationship="Self.FK_PRODUCTO_LABORATORIO" FromRole="LABORATORIO" ToRole="PRODUCTO" />
+          <NavigationProperty Name="PRODUCTO" Relationship="Self.FK__PRODUCTO__ID_LAB__59063A47" FromRole="LABORATORIO" ToRole="PRODUCTO" />
+          <NavigationProperty Name="PRODUCTO1" Relationship="Self.FK_PRODUCTO_LABORATORIO" FromRole="LABORATORIO" ToRole="PRODUCTO" />
         </EntityType>
         <EntityType Name="PRESENTACION">
           <Key>
@@ -199,7 +282,8 @@ advertencia 6002: La tabla o vista 'FarmaciaB.dbo.FARMACIA' no tiene definida ni
           <Property Name="ID_PRESENTACION" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="PRESENTACION1" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="DESCRIPCION" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="PRODUCTO" Relationship="Self.FK_PRODUCTO_PRESENTACION" FromRole="PRESENTACION" ToRole="PRODUCTO" />
+          <NavigationProperty Name="PRODUCTO" Relationship="Self.FK__PRODUCTO__ID_PRE__571DF1D5" FromRole="PRESENTACION" ToRole="PRODUCTO" />
+          <NavigationProperty Name="PRODUCTO1" Relationship="Self.FK_PRODUCTO_PRESENTACION" FromRole="PRESENTACION" ToRole="PRODUCTO" />
         </EntityType>
         <EntityType Name="PRODUCTO">
           <Key>
@@ -211,23 +295,13 @@ advertencia 6002: La tabla o vista 'FarmaciaB.dbo.FARMACIA' no tiene definida ni
           <Property Name="ID_LABORATORIO" Type="Int32" />
           <Property Name="PRODUCTO1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="DESCRIPCION" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="CATEGORIA" Relationship="Self.FK_PRODUCTO_CATEGORIA" FromRole="PRODUCTO" ToRole="CATEGORIA" />
-          <NavigationProperty Name="LABORATORIO" Relationship="Self.FK_PRODUCTO_LABORATORIO" FromRole="PRODUCTO" ToRole="LABORATORIO" />
-          <NavigationProperty Name="PRESENTACION" Relationship="Self.FK_PRODUCTO_PRESENTACION" FromRole="PRODUCTO" ToRole="PRESENTACION" />
-          <NavigationProperty Name="SUCURSAL_PRODUCTO" Relationship="Self.FK_PRODUCTO_SUCURSAL_PRODUCTO" FromRole="PRODUCTO" ToRole="SUCURSAL_PRODUCTO" />
           <Property Name="IMAGEN_PRODUCTO" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
-        <EntityType Name="SUCURSAL">
-          <Key>
-            <PropertyRef Name="ID_SUCURSAL" />
-          </Key>
-          <Property Name="ID_SUCURSAL" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="SUCURSAL1" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="DIRECCION" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="LONGITUD" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="LATITUD" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="TELEFONO" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="SUCURSAL_PRODUCTO" Relationship="Self.FK_SUCURSAL_SUCURSAL_PRODUCTO" FromRole="SUCURSAL" ToRole="SUCURSAL_PRODUCTO" />
+          <NavigationProperty Name="CATEGORIA" Relationship="Self.FK__PRODUCTO__ID_CAT__5812160E" FromRole="PRODUCTO" ToRole="CATEGORIA" />
+          <NavigationProperty Name="CATEGORIA1" Relationship="Self.FK_PRODUCTO_CATEGORIA" FromRole="PRODUCTO" ToRole="CATEGORIA" />
+          <NavigationProperty Name="LABORATORIO" Relationship="Self.FK__PRODUCTO__ID_LAB__59063A47" FromRole="PRODUCTO" ToRole="LABORATORIO" />
+          <NavigationProperty Name="LABORATORIO1" Relationship="Self.FK_PRODUCTO_LABORATORIO" FromRole="PRODUCTO" ToRole="LABORATORIO" />
+          <NavigationProperty Name="PRESENTACION" Relationship="Self.FK__PRODUCTO__ID_PRE__571DF1D5" FromRole="PRODUCTO" ToRole="PRESENTACION" />
+          <NavigationProperty Name="PRESENTACION1" Relationship="Self.FK_PRODUCTO_PRESENTACION" FromRole="PRODUCTO" ToRole="PRESENTACION" />
         </EntityType>
         <EntityType Name="SUCURSAL_PRODUCTO">
           <Key>
@@ -239,9 +313,70 @@ advertencia 6002: La tabla o vista 'FarmaciaB.dbo.FARMACIA' no tiene definida ni
           <Property Name="FECHA_VENCIMIENTO" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="EXISTENCIA" Type="Int32" Nullable="false" />
           <Property Name="PRECIO" Type="Decimal" Precision="7" Scale="2" />
-          <NavigationProperty Name="PRODUCTO" Relationship="Self.FK_PRODUCTO_SUCURSAL_PRODUCTO" FromRole="SUCURSAL_PRODUCTO" ToRole="PRODUCTO" />
-          <NavigationProperty Name="SUCURSAL" Relationship="Self.FK_SUCURSAL_SUCURSAL_PRODUCTO" FromRole="SUCURSAL_PRODUCTO" ToRole="SUCURSAL" />
         </EntityType>
+        <EntityType Name="t_oauthtoken">
+          <Key>
+            <PropertyRef Name="authtoken_id" />
+          </Key>
+          <Property Name="authtoken_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="sender_id" Type="String" MaxLength="450" FixedLength="false" Unicode="false" />
+          <Property Name="outh_name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="token" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="date" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="FARMACIA">
+          <Key>
+            <PropertyRef Name="ID_FARMACIA" />
+          </Key>
+          <Property Name="ID_FARMACIA" Type="Int32" Nullable="false" />
+          <Property Name="NOMBRE_FARMACIA" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="ATENCION_AL_CLIENTE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PAGINA_WEB" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="SUCURSAL">
+          <Key>
+            <PropertyRef Name="ID_SUCURSAL" />
+            <PropertyRef Name="SUCURSAL1" />
+            <PropertyRef Name="DIRECCION" />
+            <PropertyRef Name="LONGITUD" />
+            <PropertyRef Name="LATITUD" />
+            <PropertyRef Name="TELEFONO" />
+          </Key>
+          <Property Name="ID_SUCURSAL" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SUCURSAL1" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DIRECCION" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LONGITUD" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LATITUD" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TELEFONO" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="database_firewall_rules">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="start_ip_address" />
+            <PropertyRef Name="end_ip_address" />
+            <PropertyRef Name="create_date" />
+            <PropertyRef Name="modify_date" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="start_ip_address" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="end_ip_address" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="modify_date" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <Association Name="FK__PRODUCTO__ID_CAT__5812160E">
+          <End Role="CATEGORIA" Type="Self.CATEGORIA" Multiplicity="0..1" />
+          <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CATEGORIA">
+              <PropertyRef Name="ID_CATEGORIA" />
+            </Principal>
+            <Dependent Role="PRODUCTO">
+              <PropertyRef Name="ID_CATEGORIA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PRODUCTO_CATEGORIA">
           <End Role="CATEGORIA" Type="Self.CATEGORIA" Multiplicity="0..1" />
           <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="*" />
@@ -251,6 +386,18 @@ advertencia 6002: La tabla o vista 'FarmaciaB.dbo.FARMACIA' no tiene definida ni
             </Principal>
             <Dependent Role="PRODUCTO">
               <PropertyRef Name="ID_CATEGORIA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PRODUCTO__ID_LAB__59063A47">
+          <End Role="LABORATORIO" Type="Self.LABORATORIO" Multiplicity="0..1" />
+          <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LABORATORIO">
+              <PropertyRef Name="ID_LABORATORIO" />
+            </Principal>
+            <Dependent Role="PRODUCTO">
+              <PropertyRef Name="ID_LABORATORIO" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -266,6 +413,18 @@ advertencia 6002: La tabla o vista 'FarmaciaB.dbo.FARMACIA' no tiene definida ni
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__PRODUCTO__ID_PRE__571DF1D5">
+          <End Role="PRESENTACION" Type="Self.PRESENTACION" Multiplicity="0..1" />
+          <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRESENTACION">
+              <PropertyRef Name="ID_PRESENTACION" />
+            </Principal>
+            <Dependent Role="PRODUCTO">
+              <PropertyRef Name="ID_PRESENTACION" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PRODUCTO_PRESENTACION">
           <End Role="PRESENTACION" Type="Self.PRESENTACION" Multiplicity="0..1" />
           <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="*" />
@@ -278,68 +437,41 @@ advertencia 6002: La tabla o vista 'FarmaciaB.dbo.FARMACIA' no tiene definida ni
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PRODUCTO_SUCURSAL_PRODUCTO">
-          <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="1" />
-          <End Role="SUCURSAL_PRODUCTO" Type="Self.SUCURSAL_PRODUCTO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PRODUCTO">
-              <PropertyRef Name="ID_PRODUCTO" />
-            </Principal>
-            <Dependent Role="SUCURSAL_PRODUCTO">
-              <PropertyRef Name="ID_PRODUCTO" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SUCURSAL_SUCURSAL_PRODUCTO">
-          <End Role="SUCURSAL" Type="Self.SUCURSAL" Multiplicity="1" />
-          <End Role="SUCURSAL_PRODUCTO" Type="Self.SUCURSAL_PRODUCTO" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SUCURSAL">
-              <PropertyRef Name="ID_SUCURSAL" />
-            </Principal>
-            <Dependent Role="SUCURSAL_PRODUCTO">
-              <PropertyRef Name="ID_SUCURSAL" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="FarmaciaBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="CATEGORIA" EntityType="Self.CATEGORIA" />
           <EntitySet Name="LABORATORIO" EntityType="Self.LABORATORIO" />
           <EntitySet Name="PRESENTACION" EntityType="Self.PRESENTACION" />
           <EntitySet Name="PRODUCTO" EntityType="Self.PRODUCTO" />
-          <EntitySet Name="SUCURSAL" EntityType="Self.SUCURSAL" />
           <EntitySet Name="SUCURSAL_PRODUCTO" EntityType="Self.SUCURSAL_PRODUCTO" />
+          <EntitySet Name="t_oauthtoken" EntityType="Self.t_oauthtoken" />
+          <EntitySet Name="FARMACIA" EntityType="Self.FARMACIA" />
+          <EntitySet Name="SUCURSAL" EntityType="Self.SUCURSAL" />
+          <EntitySet Name="database_firewall_rules" EntityType="Self.database_firewall_rules" />
+          <AssociationSet Name="FK__PRODUCTO__ID_CAT__5812160E" Association="Self.FK__PRODUCTO__ID_CAT__5812160E">
+            <End Role="CATEGORIA" EntitySet="CATEGORIA" />
+            <End Role="PRODUCTO" EntitySet="PRODUCTO" />
+          </AssociationSet>
           <AssociationSet Name="FK_PRODUCTO_CATEGORIA" Association="Self.FK_PRODUCTO_CATEGORIA">
             <End Role="CATEGORIA" EntitySet="CATEGORIA" />
+            <End Role="PRODUCTO" EntitySet="PRODUCTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PRODUCTO__ID_LAB__59063A47" Association="Self.FK__PRODUCTO__ID_LAB__59063A47">
+            <End Role="LABORATORIO" EntitySet="LABORATORIO" />
             <End Role="PRODUCTO" EntitySet="PRODUCTO" />
           </AssociationSet>
           <AssociationSet Name="FK_PRODUCTO_LABORATORIO" Association="Self.FK_PRODUCTO_LABORATORIO">
             <End Role="LABORATORIO" EntitySet="LABORATORIO" />
             <End Role="PRODUCTO" EntitySet="PRODUCTO" />
           </AssociationSet>
+          <AssociationSet Name="FK__PRODUCTO__ID_PRE__571DF1D5" Association="Self.FK__PRODUCTO__ID_PRE__571DF1D5">
+            <End Role="PRESENTACION" EntitySet="PRESENTACION" />
+            <End Role="PRODUCTO" EntitySet="PRODUCTO" />
+          </AssociationSet>
           <AssociationSet Name="FK_PRODUCTO_PRESENTACION" Association="Self.FK_PRODUCTO_PRESENTACION">
             <End Role="PRESENTACION" EntitySet="PRESENTACION" />
             <End Role="PRODUCTO" EntitySet="PRODUCTO" />
           </AssociationSet>
-          <AssociationSet Name="FK_PRODUCTO_SUCURSAL_PRODUCTO" Association="Self.FK_PRODUCTO_SUCURSAL_PRODUCTO">
-            <End Role="PRODUCTO" EntitySet="PRODUCTO" />
-            <End Role="SUCURSAL_PRODUCTO" EntitySet="SUCURSAL_PRODUCTO" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SUCURSAL_SUCURSAL_PRODUCTO" Association="Self.FK_SUCURSAL_SUCURSAL_PRODUCTO">
-            <End Role="SUCURSAL" EntitySet="SUCURSAL" />
-            <End Role="SUCURSAL_PRODUCTO" EntitySet="SUCURSAL_PRODUCTO" />
-          </AssociationSet>
-          <EntitySet Name="FARMACIA" EntityType="FarmaciaBModel.FARMACIA" />
         </EntityContainer>
-        <EntityType Name="FARMACIA">
-          <Key>
-            <PropertyRef Name="ID_FARMACIA" />
-          </Key>
-          <Property Name="ID_FARMACIA" Type="Int32" Nullable="false" />
-          <Property Name="NOMBRE_FARMACIA" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
-          <Property Name="ATENCION_AL_CLIENTE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="PAGINA_WEB" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -376,25 +508,13 @@ advertencia 6002: La tabla o vista 'FarmaciaB.dbo.FARMACIA' no tiene definida ni
           <EntitySetMapping Name="PRODUCTO">
             <EntityTypeMapping TypeName="FarmaciaBModel.PRODUCTO">
               <MappingFragment StoreEntitySet="PRODUCTO">
-                <ScalarProperty Name="IMAGEN_PRODUCTO" ColumnName="IMAGEN_PRODUCTO" />
                 <ScalarProperty Name="ID_PRODUCTO" ColumnName="ID_PRODUCTO" />
                 <ScalarProperty Name="ID_PRESENTACION" ColumnName="ID_PRESENTACION" />
                 <ScalarProperty Name="ID_CATEGORIA" ColumnName="ID_CATEGORIA" />
                 <ScalarProperty Name="ID_LABORATORIO" ColumnName="ID_LABORATORIO" />
                 <ScalarProperty Name="PRODUCTO1" ColumnName="PRODUCTO" />
                 <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SUCURSAL">
-            <EntityTypeMapping TypeName="FarmaciaBModel.SUCURSAL">
-              <MappingFragment StoreEntitySet="SUCURSAL">
-                <ScalarProperty Name="ID_SUCURSAL" ColumnName="ID_SUCURSAL" />
-                <ScalarProperty Name="SUCURSAL1" ColumnName="SUCURSAL" />
-                <ScalarProperty Name="DIRECCION" ColumnName="DIRECCION" />
-                <ScalarProperty Name="LONGITUD" ColumnName="LONGITUD" />
-                <ScalarProperty Name="LATITUD" ColumnName="LATITUD" />
-                <ScalarProperty Name="TELEFONO" ColumnName="TELEFONO" />
+                <ScalarProperty Name="IMAGEN_PRODUCTO" ColumnName="IMAGEN_PRODUCTO" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -410,13 +530,48 @@ advertencia 6002: La tabla o vista 'FarmaciaB.dbo.FARMACIA' no tiene definida ni
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="t_oauthtoken">
+            <EntityTypeMapping TypeName="FarmaciaBModel.t_oauthtoken">
+              <MappingFragment StoreEntitySet="t_oauthtoken">
+                <ScalarProperty Name="authtoken_id" ColumnName="authtoken_id" />
+                <ScalarProperty Name="sender_id" ColumnName="sender_id" />
+                <ScalarProperty Name="outh_name" ColumnName="outh_name" />
+                <ScalarProperty Name="token" ColumnName="token" />
+                <ScalarProperty Name="date" ColumnName="date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="FARMACIA">
             <EntityTypeMapping TypeName="FarmaciaBModel.FARMACIA">
               <MappingFragment StoreEntitySet="FARMACIA">
-                <ScalarProperty Name="PAGINA_WEB" ColumnName="PAGINA_WEB" />
-                <ScalarProperty Name="ATENCION_AL_CLIENTE" ColumnName="ATENCION_AL_CLIENTE" />
-                <ScalarProperty Name="NOMBRE_FARMACIA" ColumnName="NOMBRE_FARMACIA" />
                 <ScalarProperty Name="ID_FARMACIA" ColumnName="ID_FARMACIA" />
+                <ScalarProperty Name="NOMBRE_FARMACIA" ColumnName="NOMBRE_FARMACIA" />
+                <ScalarProperty Name="ATENCION_AL_CLIENTE" ColumnName="ATENCION_AL_CLIENTE" />
+                <ScalarProperty Name="PAGINA_WEB" ColumnName="PAGINA_WEB" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SUCURSAL">
+            <EntityTypeMapping TypeName="FarmaciaBModel.SUCURSAL">
+              <MappingFragment StoreEntitySet="SUCURSAL">
+                <ScalarProperty Name="ID_SUCURSAL" ColumnName="ID_SUCURSAL" />
+                <ScalarProperty Name="SUCURSAL1" ColumnName="SUCURSAL" />
+                <ScalarProperty Name="DIRECCION" ColumnName="DIRECCION" />
+                <ScalarProperty Name="LONGITUD" ColumnName="LONGITUD" />
+                <ScalarProperty Name="LATITUD" ColumnName="LATITUD" />
+                <ScalarProperty Name="TELEFONO" ColumnName="TELEFONO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="database_firewall_rules">
+            <EntityTypeMapping TypeName="FarmaciaBModel.database_firewall_rules">
+              <MappingFragment StoreEntitySet="database_firewall_rules">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="start_ip_address" ColumnName="start_ip_address" />
+                <ScalarProperty Name="end_ip_address" ColumnName="end_ip_address" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="modify_date" ColumnName="modify_date" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

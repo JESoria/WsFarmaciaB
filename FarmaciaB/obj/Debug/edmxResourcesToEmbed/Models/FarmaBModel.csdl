@@ -156,6 +156,8 @@
       <End Role="SUCURSAL_PRODUCTO" EntitySet="SUCURSAL_PRODUCTO" />
     </AssociationSet>
     <EntitySet Name="FARMACIA" EntityType="FarmaciaBModel.FARMACIA" />
+    <EntitySet Name="t_oauthtoken" EntityType="FarmaciaBModel.t_oauthtoken" />
+    <EntitySet Name="database_firewall_rules" EntityType="FarmaciaBModel.database_firewall_rules" />
   </EntityContainer>
   <EntityType Name="FARMACIA">
     <Key>
@@ -165,5 +167,31 @@
     <Property Name="NOMBRE_FARMACIA" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
     <Property Name="ATENCION_AL_CLIENTE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="PAGINA_WEB" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="t_oauthtoken">
+    <Key>
+      <PropertyRef Name="authtoken_id" />
+    </Key>
+    <Property Name="authtoken_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="sender_id" Type="String" MaxLength="450" FixedLength="false" Unicode="false" />
+    <Property Name="outh_name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="token" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="date" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="database_firewall_rules">
+    <Key>
+      <PropertyRef Name="id" />
+      <PropertyRef Name="name" />
+      <PropertyRef Name="start_ip_address" />
+      <PropertyRef Name="end_ip_address" />
+      <PropertyRef Name="create_date" />
+      <PropertyRef Name="modify_date" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="start_ip_address" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="end_ip_address" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="modify_date" Type="DateTime" Nullable="false" Precision="3" />
   </EntityType>
 </Schema>

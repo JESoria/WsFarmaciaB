@@ -14,12 +14,6 @@ namespace FarmaciaB.Models
     
     public partial class PRODUCTO
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public PRODUCTO()
-        {
-            this.SUCURSAL_PRODUCTO = new HashSet<SUCURSAL_PRODUCTO>();
-        }
-    
         public int ID_PRODUCTO { get; set; }
         public Nullable<int> ID_PRESENTACION { get; set; }
         public Nullable<int> ID_CATEGORIA { get; set; }
@@ -29,9 +23,10 @@ namespace FarmaciaB.Models
         public byte[] IMAGEN_PRODUCTO { get; set; }
     
         public virtual CATEGORIA CATEGORIA { get; set; }
+        public virtual CATEGORIA CATEGORIA1 { get; set; }
         public virtual LABORATORIO LABORATORIO { get; set; }
+        public virtual LABORATORIO LABORATORIO1 { get; set; }
         public virtual PRESENTACION PRESENTACION { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SUCURSAL_PRODUCTO> SUCURSAL_PRODUCTO { get; set; }
+        public virtual PRESENTACION PRESENTACION1 { get; set; }
     }
 }

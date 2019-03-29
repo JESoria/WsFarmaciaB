@@ -12,13 +12,12 @@ namespace FarmaciaB.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class SUCURSAL
+    public partial class t_oauthtoken
     {
-        public int ID_SUCURSAL { get; set; }
-        public string SUCURSAL1 { get; set; }
-        public string DIRECCION { get; set; }
-        public string LONGITUD { get; set; }
-        public string LATITUD { get; set; }
-        public string TELEFONO { get; set; }
+        public int authtoken_id { get; set; }
+        public string sender_id { get; set; }
+        public string outh_name { get; set; }
+        public string token { get; set; }
+        public Nullable<System.DateTime> date { get; set; }
     }
 }

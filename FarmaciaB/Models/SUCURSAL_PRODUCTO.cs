@@ -20,8 +20,5 @@ namespace FarmaciaB.Models
         public System.DateTime FECHA_VENCIMIENTO { get; set; }
         public int EXISTENCIA { get; set; }
         public Nullable<decimal> PRECIO { get; set; }
-    
-        public virtual PRODUCTO PRODUCTO { get; set; }
-        public virtual SUCURSAL SUCURSAL { get; set; }
     }
 }
