@@ -28,8 +28,8 @@ namespace FarmaciaB.Controllers
                                     {
                                         producto = y.PRODUCTO1,
                                         presentacion = z.PRESENTACION1,
-                                        fechaVencimiento = x.FECHA_VENCIMIENTO,
-                                        laboratorio = l.LABORATORIO1,
+                                        fechaVencimiento = x.FECHA_VENCIMIENTO.ToShortDateString(),
+                                        laboratorio = l.LABORATORIO1.Trim(),
                                         principiosActivos = y.DESCRIPCION,
                                         categoria = c.CATEGORIA1,
                                         precio = Convert.ToDouble(x.PRECIO),

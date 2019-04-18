@@ -16,6 +16,7 @@ namespace FarmaciaB.Controllers
 
             using (FarmaciaBEntities db = new FarmaciaBEntities())
             {
+                var Farmacia = db.FARMACIA.FirstOrDefault();
 
                 db.SUCURSAL_PRODUCTO.OrderBy(x => x.ID_SUCURSAL_PRODUCTO).ToList().ForEach(x =>
                 {
@@ -26,7 +27,12 @@ namespace FarmaciaB.Controllers
                             idSucursalProducto = x.ID_SUCURSAL_PRODUCTO,
                             idSucursal = x.ID_SUCURSAL,
                             producto = z.PRODUCTO1,
-                            precio = Convert.ToDecimal(x.PRECIO)
+                            precio = Convert.ToDecimal(x.PRECIO),
+                            sucursal = x.SUCURSAL.SUCURSAL1,
+                            latitud = x.SUCURSAL.LATITUD,
+                            longitud = x.SUCURSAL.LONGITUD,
+                            direccion = x.SUCURSAL.DIRECCION,
+                            idFarmacia = Convert.ToInt32(Farmacia.ID_FARMACIA)
                         });
                     });
                 });

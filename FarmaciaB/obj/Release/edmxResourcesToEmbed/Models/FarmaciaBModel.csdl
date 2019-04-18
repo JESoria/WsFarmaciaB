@@ -7,7 +7,7 @@
     <Property Name="ID_CATEGORIA" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="CATEGORIA1" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="DESCRIPCION" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="PRODUCTO" Relationship="Self.FK__PRODUCTO__ID_CAT__1DE57479" FromRole="CATEGORIA" ToRole="PRODUCTO" />
+    <NavigationProperty Name="PRODUCTO" Relationship="Self.FK__PRODUCTO__ID_CAT__5812160E" FromRole="CATEGORIA" ToRole="PRODUCTO" />
     <NavigationProperty Name="PRODUCTO1" Relationship="Self.FK_PRODUCTO_CATEGORIA" FromRole="CATEGORIA" ToRole="PRODUCTO" />
   </EntityType>
   <EntityType Name="LABORATORIO">
@@ -17,7 +17,7 @@
     <Property Name="ID_LABORATORIO" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="LABORATORIO1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="TITULAR" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="PRODUCTO" Relationship="Self.FK__PRODUCTO__ID_LAB__1ED998B2" FromRole="LABORATORIO" ToRole="PRODUCTO" />
+    <NavigationProperty Name="PRODUCTO" Relationship="Self.FK__PRODUCTO__ID_LAB__59063A47" FromRole="LABORATORIO" ToRole="PRODUCTO" />
     <NavigationProperty Name="PRODUCTO1" Relationship="Self.FK_PRODUCTO_LABORATORIO" FromRole="LABORATORIO" ToRole="PRODUCTO" />
   </EntityType>
   <EntityType Name="PRESENTACION">
@@ -27,7 +27,7 @@
     <Property Name="ID_PRESENTACION" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="PRESENTACION1" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="DESCRIPCION" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
-    <NavigationProperty Name="PRODUCTO" Relationship="Self.FK__PRODUCTO__ID_PRE__1FCDBCEB" FromRole="PRESENTACION" ToRole="PRODUCTO" />
+    <NavigationProperty Name="PRODUCTO" Relationship="Self.FK__PRODUCTO__ID_PRE__571DF1D5" FromRole="PRESENTACION" ToRole="PRODUCTO" />
     <NavigationProperty Name="PRODUCTO1" Relationship="Self.FK_PRODUCTO_PRESENTACION" FromRole="PRESENTACION" ToRole="PRODUCTO" />
   </EntityType>
   <EntityType Name="PRODUCTO">
@@ -41,24 +41,12 @@
     <Property Name="PRODUCTO1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="DESCRIPCION" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="IMAGEN_PRODUCTO" Type="Binary" MaxLength="Max" FixedLength="false" />
-    <NavigationProperty Name="CATEGORIA" Relationship="Self.FK__PRODUCTO__ID_CAT__1DE57479" FromRole="PRODUCTO" ToRole="CATEGORIA" />
+    <NavigationProperty Name="CATEGORIA" Relationship="Self.FK__PRODUCTO__ID_CAT__5812160E" FromRole="PRODUCTO" ToRole="CATEGORIA" />
     <NavigationProperty Name="CATEGORIA1" Relationship="Self.FK_PRODUCTO_CATEGORIA" FromRole="PRODUCTO" ToRole="CATEGORIA" />
-    <NavigationProperty Name="LABORATORIO" Relationship="Self.FK__PRODUCTO__ID_LAB__1ED998B2" FromRole="PRODUCTO" ToRole="LABORATORIO" />
+    <NavigationProperty Name="LABORATORIO" Relationship="Self.FK__PRODUCTO__ID_LAB__59063A47" FromRole="PRODUCTO" ToRole="LABORATORIO" />
     <NavigationProperty Name="LABORATORIO1" Relationship="Self.FK_PRODUCTO_LABORATORIO" FromRole="PRODUCTO" ToRole="LABORATORIO" />
-    <NavigationProperty Name="PRESENTACION" Relationship="Self.FK__PRODUCTO__ID_PRE__1FCDBCEB" FromRole="PRODUCTO" ToRole="PRESENTACION" />
+    <NavigationProperty Name="PRESENTACION" Relationship="Self.FK__PRODUCTO__ID_PRE__571DF1D5" FromRole="PRODUCTO" ToRole="PRESENTACION" />
     <NavigationProperty Name="PRESENTACION1" Relationship="Self.FK_PRODUCTO_PRESENTACION" FromRole="PRODUCTO" ToRole="PRESENTACION" />
-  </EntityType>
-  <EntityType Name="SUCURSAL">
-    <Key>
-      <PropertyRef Name="ID_SUCURSAL" />
-    </Key>
-    <Property Name="ID_SUCURSAL" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="SUCURSAL1" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="DIRECCION" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="LONGITUD" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="LATITUD" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="TELEFONO" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-    <NavigationProperty Name="SUCURSAL_PRODUCTO" Relationship="Self.FK_SUCURSAL_PRODUCTO_SUCURSAL" FromRole="SUCURSAL" ToRole="SUCURSAL_PRODUCTO" />
   </EntityType>
   <EntityType Name="SUCURSAL_PRODUCTO">
     <Key>
@@ -70,17 +58,6 @@
     <Property Name="FECHA_VENCIMIENTO" Type="DateTime" Nullable="false" Precision="0" />
     <Property Name="EXISTENCIA" Type="Int32" Nullable="false" />
     <Property Name="PRECIO" Type="Decimal" Precision="7" Scale="2" />
-    <NavigationProperty Name="SUCURSAL" Relationship="Self.FK_SUCURSAL_PRODUCTO_SUCURSAL" FromRole="SUCURSAL_PRODUCTO" ToRole="SUCURSAL" />
-  </EntityType>
-  <EntityType Name="sysdiagrams">
-    <Key>
-      <PropertyRef Name="diagram_id" />
-    </Key>
-    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="principal_id" Type="Int32" Nullable="false" />
-    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="version" Type="Int32" />
-    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
   </EntityType>
   <EntityType Name="t_oauthtoken">
     <Key>
@@ -101,7 +78,39 @@
     <Property Name="ATENCION_AL_CLIENTE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="PAGINA_WEB" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
   </EntityType>
-  <Association Name="FK__PRODUCTO__ID_CAT__1DE57479">
+  <EntityType Name="SUCURSAL">
+    <Key>
+      <PropertyRef Name="ID_SUCURSAL" />
+      <PropertyRef Name="SUCURSAL1" />
+      <PropertyRef Name="DIRECCION" />
+      <PropertyRef Name="LONGITUD" />
+      <PropertyRef Name="LATITUD" />
+      <PropertyRef Name="TELEFONO" />
+    </Key>
+    <Property Name="ID_SUCURSAL" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SUCURSAL1" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DIRECCION" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="LONGITUD" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="LATITUD" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="TELEFONO" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="database_firewall_rules">
+    <Key>
+      <PropertyRef Name="id" />
+      <PropertyRef Name="name" />
+      <PropertyRef Name="start_ip_address" />
+      <PropertyRef Name="end_ip_address" />
+      <PropertyRef Name="create_date" />
+      <PropertyRef Name="modify_date" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="start_ip_address" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="end_ip_address" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="modify_date" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <Association Name="FK__PRODUCTO__ID_CAT__5812160E">
     <End Role="CATEGORIA" Type="Self.CATEGORIA" Multiplicity="0..1" />
     <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="*" />
     <ReferentialConstraint>
@@ -125,7 +134,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__PRODUCTO__ID_LAB__1ED998B2">
+  <Association Name="FK__PRODUCTO__ID_LAB__59063A47">
     <End Role="LABORATORIO" Type="Self.LABORATORIO" Multiplicity="0..1" />
     <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="*" />
     <ReferentialConstraint>
@@ -149,7 +158,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__PRODUCTO__ID_PRE__1FCDBCEB">
+  <Association Name="FK__PRODUCTO__ID_PRE__571DF1D5">
     <End Role="PRESENTACION" Type="Self.PRESENTACION" Multiplicity="0..1" />
     <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="*" />
     <ReferentialConstraint>
@@ -173,29 +182,17 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_SUCURSAL_PRODUCTO_SUCURSAL">
-    <End Role="SUCURSAL" Type="Self.SUCURSAL" Multiplicity="1" />
-    <End Role="SUCURSAL_PRODUCTO" Type="Self.SUCURSAL_PRODUCTO" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="SUCURSAL">
-        <PropertyRef Name="ID_SUCURSAL" />
-      </Principal>
-      <Dependent Role="SUCURSAL_PRODUCTO">
-        <PropertyRef Name="ID_SUCURSAL" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <EntityContainer Name="FarmaciaBEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="CATEGORIA" EntityType="Self.CATEGORIA" />
     <EntitySet Name="LABORATORIO" EntityType="Self.LABORATORIO" />
     <EntitySet Name="PRESENTACION" EntityType="Self.PRESENTACION" />
     <EntitySet Name="PRODUCTO" EntityType="Self.PRODUCTO" />
-    <EntitySet Name="SUCURSAL" EntityType="Self.SUCURSAL" />
     <EntitySet Name="SUCURSAL_PRODUCTO" EntityType="Self.SUCURSAL_PRODUCTO" />
-    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
     <EntitySet Name="t_oauthtoken" EntityType="Self.t_oauthtoken" />
     <EntitySet Name="FARMACIA" EntityType="Self.FARMACIA" />
-    <AssociationSet Name="FK__PRODUCTO__ID_CAT__1DE57479" Association="Self.FK__PRODUCTO__ID_CAT__1DE57479">
+    <EntitySet Name="SUCURSAL" EntityType="Self.SUCURSAL" />
+    <EntitySet Name="database_firewall_rules" EntityType="Self.database_firewall_rules" />
+    <AssociationSet Name="FK__PRODUCTO__ID_CAT__5812160E" Association="Self.FK__PRODUCTO__ID_CAT__5812160E">
       <End Role="CATEGORIA" EntitySet="CATEGORIA" />
       <End Role="PRODUCTO" EntitySet="PRODUCTO" />
     </AssociationSet>
@@ -203,7 +200,7 @@
       <End Role="CATEGORIA" EntitySet="CATEGORIA" />
       <End Role="PRODUCTO" EntitySet="PRODUCTO" />
     </AssociationSet>
-    <AssociationSet Name="FK__PRODUCTO__ID_LAB__1ED998B2" Association="Self.FK__PRODUCTO__ID_LAB__1ED998B2">
+    <AssociationSet Name="FK__PRODUCTO__ID_LAB__59063A47" Association="Self.FK__PRODUCTO__ID_LAB__59063A47">
       <End Role="LABORATORIO" EntitySet="LABORATORIO" />
       <End Role="PRODUCTO" EntitySet="PRODUCTO" />
     </AssociationSet>
@@ -211,7 +208,7 @@
       <End Role="LABORATORIO" EntitySet="LABORATORIO" />
       <End Role="PRODUCTO" EntitySet="PRODUCTO" />
     </AssociationSet>
-    <AssociationSet Name="FK__PRODUCTO__ID_PRE__1FCDBCEB" Association="Self.FK__PRODUCTO__ID_PRE__1FCDBCEB">
+    <AssociationSet Name="FK__PRODUCTO__ID_PRE__571DF1D5" Association="Self.FK__PRODUCTO__ID_PRE__571DF1D5">
       <End Role="PRESENTACION" EntitySet="PRESENTACION" />
       <End Role="PRODUCTO" EntitySet="PRODUCTO" />
     </AssociationSet>
@@ -219,50 +216,5 @@
       <End Role="PRESENTACION" EntitySet="PRESENTACION" />
       <End Role="PRODUCTO" EntitySet="PRODUCTO" />
     </AssociationSet>
-    <AssociationSet Name="FK_SUCURSAL_PRODUCTO_SUCURSAL" Association="Self.FK_SUCURSAL_PRODUCTO_SUCURSAL">
-      <End Role="SUCURSAL" EntitySet="SUCURSAL" />
-      <End Role="SUCURSAL_PRODUCTO" EntitySet="SUCURSAL_PRODUCTO" />
-    </AssociationSet>
-    <FunctionImport Name="sp_alterdiagram">
-      <Parameter Name="diagramname" Mode="In" Type="String" />
-      <Parameter Name="owner_id" Mode="In" Type="Int32" />
-      <Parameter Name="version" Mode="In" Type="Int32" />
-      <Parameter Name="definition" Mode="In" Type="Binary" />
-    </FunctionImport>
-    <FunctionImport Name="sp_creatediagram">
-      <Parameter Name="diagramname" Mode="In" Type="String" />
-      <Parameter Name="owner_id" Mode="In" Type="Int32" />
-      <Parameter Name="version" Mode="In" Type="Int32" />
-      <Parameter Name="definition" Mode="In" Type="Binary" />
-    </FunctionImport>
-    <FunctionImport Name="sp_dropdiagram">
-      <Parameter Name="diagramname" Mode="In" Type="String" />
-      <Parameter Name="owner_id" Mode="In" Type="Int32" />
-    </FunctionImport>
-    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(FarmaciaBModel.sp_helpdiagramdefinition_Result)">
-      <Parameter Name="diagramname" Mode="In" Type="String" />
-      <Parameter Name="owner_id" Mode="In" Type="Int32" />
-    </FunctionImport>
-    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(FarmaciaBModel.sp_helpdiagrams_Result)">
-      <Parameter Name="diagramname" Mode="In" Type="String" />
-      <Parameter Name="owner_id" Mode="In" Type="Int32" />
-    </FunctionImport>
-    <FunctionImport Name="sp_renamediagram">
-      <Parameter Name="diagramname" Mode="In" Type="String" />
-      <Parameter Name="owner_id" Mode="In" Type="Int32" />
-      <Parameter Name="new_diagramname" Mode="In" Type="String" />
-    </FunctionImport>
-    <FunctionImport Name="sp_upgraddiagrams" />
   </EntityContainer>
-  <ComplexType Name="sp_helpdiagramdefinition_Result">
-    <Property Type="Int32" Name="version" Nullable="true" />
-    <Property Type="Binary" Name="definition" Nullable="true" />
-  </ComplexType>
-  <ComplexType Name="sp_helpdiagrams_Result">
-    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
-    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
-    <Property Type="Int32" Name="ID" Nullable="false" />
-    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
-    <Property Type="Int32" Name="OwnerID" Nullable="false" />
-  </ComplexType>
 </Schema>

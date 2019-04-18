@@ -10,17 +10,13 @@
 namespace FarmaciaB.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class SUCURSAL_PRODUCTO
+    public partial class sp_helpdiagrams_Result
     {
-        public int ID_SUCURSAL_PRODUCTO { get; set; }
-        public int ID_SUCURSAL { get; set; }
-        public int ID_PRODUCTO { get; set; }
-        public System.DateTime FECHA_VENCIMIENTO { get; set; }
-        public int EXISTENCIA { get; set; }
-        public Nullable<decimal> PRECIO { get; set; }
-    
-        public virtual SUCURSAL SUCURSAL { get; set; }
+        public string Database { get; set; }
+        public string Name { get; set; }
+        public int ID { get; set; }
+        public string Owner { get; set; }
+        public int OwnerID { get; set; }
     }
 }

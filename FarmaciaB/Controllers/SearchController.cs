@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Device.Location;
 using System.Globalization;
+using FarmaciaB.Models;
 
 namespace FarmaciaB.Controllers
 {

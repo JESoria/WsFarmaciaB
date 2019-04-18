@@ -14,11 +14,20 @@ namespace FarmaciaB.Models
     
     public partial class SUCURSAL
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public SUCURSAL()
+        {
+            this.SUCURSAL_PRODUCTO = new HashSet<SUCURSAL_PRODUCTO>();
+        }
+    
         public int ID_SUCURSAL { get; set; }
         public string SUCURSAL1 { get; set; }
         public string DIRECCION { get; set; }
         public string LONGITUD { get; set; }
         public string LATITUD { get; set; }
         public string TELEFONO { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SUCURSAL_PRODUCTO> SUCURSAL_PRODUCTO { get; set; }
     }
 }
