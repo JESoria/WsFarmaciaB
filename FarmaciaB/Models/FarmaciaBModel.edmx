@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="FarmaciaBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="FarmaciaBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="CATEGORIA">
           <Key>
             <PropertyRef Name="ID_CATEGORIA" />
@@ -13,13 +13,11 @@
           <Property Name="CATEGORIA" Type="varchar" MaxLength="64" Nullable="false" />
           <Property Name="DESCRIPCION" Type="varchar" MaxLength="256" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'FarmaciaB.dbo.FARMACIA' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="FARMACIA">
           <Key>
             <PropertyRef Name="ID_FARMACIA" />
           </Key>
-          <Property Name="ID_FARMACIA" Type="int" Nullable="false" />
+          <Property Name="ID_FARMACIA" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="NOMBRE_FARMACIA" Type="varchar" MaxLength="256" />
           <Property Name="ATENCION_AL_CLIENTE" Type="varchar" MaxLength="50" />
           <Property Name="PAGINA_WEB" Type="varchar" MaxLength="50" />
@@ -166,6 +164,18 @@ advertencia 6002: La tabla o vista 'FarmaciaB.dbo.FARMACIA' no tiene definida ni
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_SUCURSAL_PRODUCTO_PRODUCTO">
+          <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="1" />
+          <End Role="SUCURSAL_PRODUCTO" Type="Self.SUCURSAL_PRODUCTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCTO">
+              <PropertyRef Name="ID_PRODUCTO" />
+            </Principal>
+            <Dependent Role="SUCURSAL_PRODUCTO">
+              <PropertyRef Name="ID_PRODUCTO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_SUCURSAL_PRODUCTO_SUCURSAL">
           <End Role="SUCURSAL" Type="Self.SUCURSAL" Multiplicity="1" />
           <End Role="SUCURSAL_PRODUCTO" Type="Self.SUCURSAL_PRODUCTO" Multiplicity="*" />
@@ -220,6 +230,7 @@ advertencia 6002: La tabla o vista 'FarmaciaB.dbo.FARMACIA' no tiene definida ni
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="FarmaciaBModelStoreContainer">
           <EntitySet Name="CATEGORIA" EntityType="Self.CATEGORIA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FARMACIA" EntityType="Self.FARMACIA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LABORATORIO" EntityType="Self.LABORATORIO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PRESENTACION" EntityType="Self.PRESENTACION" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PRODUCTO" EntityType="Self.PRODUCTO" Schema="dbo" store:Type="Tables" />
@@ -227,14 +238,6 @@ advertencia 6002: La tabla o vista 'FarmaciaB.dbo.FARMACIA' no tiene definida ni
           <EntitySet Name="SUCURSAL_PRODUCTO" EntityType="Self.SUCURSAL_PRODUCTO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="t_oauthtoken" EntityType="Self.t_oauthtoken" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="FARMACIA" EntityType="Self.FARMACIA" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [FARMACIA].[ID_FARMACIA] AS [ID_FARMACIA], 
-    [FARMACIA].[NOMBRE_FARMACIA] AS [NOMBRE_FARMACIA], 
-    [FARMACIA].[ATENCION_AL_CLIENTE] AS [ATENCION_AL_CLIENTE], 
-    [FARMACIA].[PAGINA_WEB] AS [PAGINA_WEB]
-    FROM [dbo].[FARMACIA] AS [FARMACIA]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="FK__PRODUCTO__ID_CAT__1DE57479" Association="Self.FK__PRODUCTO__ID_CAT__1DE57479">
             <End Role="CATEGORIA" EntitySet="CATEGORIA" />
             <End Role="PRODUCTO" EntitySet="PRODUCTO" />
@@ -259,13 +262,16 @@ advertencia 6002: La tabla o vista 'FarmaciaB.dbo.FARMACIA' no tiene definida ni
             <End Role="PRESENTACION" EntitySet="PRESENTACION" />
             <End Role="PRODUCTO" EntitySet="PRODUCTO" />
           </AssociationSet>
+          <AssociationSet Name="FK_SUCURSAL_PRODUCTO_PRODUCTO" Association="Self.FK_SUCURSAL_PRODUCTO_PRODUCTO">
+            <End Role="PRODUCTO" EntitySet="PRODUCTO" />
+            <End Role="SUCURSAL_PRODUCTO" EntitySet="SUCURSAL_PRODUCTO" />
+          </AssociationSet>
           <AssociationSet Name="FK_SUCURSAL_PRODUCTO_SUCURSAL" Association="Self.FK_SUCURSAL_PRODUCTO_SUCURSAL">
             <End Role="SUCURSAL" EntitySet="SUCURSAL" />
             <End Role="SUCURSAL_PRODUCTO" EntitySet="SUCURSAL_PRODUCTO" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="FarmaciaBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -316,6 +322,7 @@ advertencia 6002: La tabla o vista 'FarmaciaB.dbo.FARMACIA' no tiene definida ni
           <NavigationProperty Name="LABORATORIO1" Relationship="Self.FK_PRODUCTO_LABORATORIO" FromRole="PRODUCTO" ToRole="LABORATORIO" />
           <NavigationProperty Name="PRESENTACION" Relationship="Self.FK__PRODUCTO__ID_PRE__1FCDBCEB" FromRole="PRODUCTO" ToRole="PRESENTACION" />
           <NavigationProperty Name="PRESENTACION1" Relationship="Self.FK_PRODUCTO_PRESENTACION" FromRole="PRODUCTO" ToRole="PRESENTACION" />
+          <NavigationProperty Name="SUCURSAL_PRODUCTO" Relationship="FarmaciaBModel.FK_SUCURSAL_PRODUCTO_PRODUCTO" FromRole="PRODUCTO" ToRole="SUCURSAL_PRODUCTO" />
         </EntityType>
         <EntityType Name="SUCURSAL">
           <Key>
@@ -340,6 +347,7 @@ advertencia 6002: La tabla o vista 'FarmaciaB.dbo.FARMACIA' no tiene definida ni
           <Property Name="EXISTENCIA" Type="Int32" Nullable="false" />
           <Property Name="PRECIO" Type="Decimal" Precision="7" Scale="2" />
           <NavigationProperty Name="SUCURSAL" Relationship="Self.FK_SUCURSAL_PRODUCTO_SUCURSAL" FromRole="SUCURSAL_PRODUCTO" ToRole="SUCURSAL" />
+          <NavigationProperty Name="PRODUCTO" Relationship="FarmaciaBModel.FK_SUCURSAL_PRODUCTO_PRODUCTO" FromRole="SUCURSAL_PRODUCTO" ToRole="PRODUCTO" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -360,15 +368,6 @@ advertencia 6002: La tabla o vista 'FarmaciaB.dbo.FARMACIA' no tiene definida ni
           <Property Name="outh_name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="token" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="date" Type="DateTime" Precision="3" />
-        </EntityType>
-        <EntityType Name="FARMACIA">
-          <Key>
-            <PropertyRef Name="ID_FARMACIA" />
-          </Key>
-          <Property Name="ID_FARMACIA" Type="Int32" Nullable="false" />
-          <Property Name="NOMBRE_FARMACIA" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
-          <Property Name="ATENCION_AL_CLIENTE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="PAGINA_WEB" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK__PRODUCTO__ID_CAT__1DE57479">
           <End Role="CATEGORIA" Type="Self.CATEGORIA" Multiplicity="0..1" />
@@ -463,7 +462,6 @@ advertencia 6002: La tabla o vista 'FarmaciaB.dbo.FARMACIA' no tiene definida ni
           <EntitySet Name="SUCURSAL_PRODUCTO" EntityType="Self.SUCURSAL_PRODUCTO" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="t_oauthtoken" EntityType="Self.t_oauthtoken" />
-          <EntitySet Name="FARMACIA" EntityType="Self.FARMACIA" />
           <AssociationSet Name="FK__PRODUCTO__ID_CAT__1DE57479" Association="Self.FK__PRODUCTO__ID_CAT__1DE57479">
             <End Role="CATEGORIA" EntitySet="CATEGORIA" />
             <End Role="PRODUCTO" EntitySet="PRODUCTO" />
@@ -522,6 +520,11 @@ advertencia 6002: La tabla o vista 'FarmaciaB.dbo.FARMACIA' no tiene definida ni
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
+          <AssociationSet Name="FK_SUCURSAL_PRODUCTO_PRODUCTO" Association="FarmaciaBModel.FK_SUCURSAL_PRODUCTO_PRODUCTO">
+            <End Role="PRODUCTO" EntitySet="PRODUCTO" />
+            <End Role="SUCURSAL_PRODUCTO" EntitySet="SUCURSAL_PRODUCTO" />
+          </AssociationSet>
+          <EntitySet Name="FARMACIA" EntityType="FarmaciaBModel.FARMACIA" />
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -534,6 +537,27 @@ advertencia 6002: La tabla o vista 'FarmaciaB.dbo.FARMACIA' no tiene definida ni
           <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
           <Property Type="Int32" Name="OwnerID" Nullable="false" />
         </ComplexType>
+        <Association Name="FK_SUCURSAL_PRODUCTO_PRODUCTO">
+          <End Type="FarmaciaBModel.PRODUCTO" Role="PRODUCTO" Multiplicity="1" />
+          <End Type="FarmaciaBModel.SUCURSAL_PRODUCTO" Role="SUCURSAL_PRODUCTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCTO">
+              <PropertyRef Name="ID_PRODUCTO" />
+            </Principal>
+            <Dependent Role="SUCURSAL_PRODUCTO">
+              <PropertyRef Name="ID_PRODUCTO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="FARMACIA">
+          <Key>
+            <PropertyRef Name="ID_FARMACIA" />
+          </Key>
+          <Property Name="ID_FARMACIA" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NOMBRE_FARMACIA" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="ATENCION_AL_CLIENTE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PAGINA_WEB" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -626,16 +650,6 @@ advertencia 6002: La tabla o vista 'FarmaciaB.dbo.FARMACIA' no tiene definida ni
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="FARMACIA">
-            <EntityTypeMapping TypeName="FarmaciaBModel.FARMACIA">
-              <MappingFragment StoreEntitySet="FARMACIA">
-                <ScalarProperty Name="ID_FARMACIA" ColumnName="ID_FARMACIA" />
-                <ScalarProperty Name="NOMBRE_FARMACIA" ColumnName="NOMBRE_FARMACIA" />
-                <ScalarProperty Name="ATENCION_AL_CLIENTE" ColumnName="ATENCION_AL_CLIENTE" />
-                <ScalarProperty Name="PAGINA_WEB" ColumnName="PAGINA_WEB" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="FarmaciaBModel.Store.sp_alterdiagram" />
           <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="FarmaciaBModel.Store.sp_creatediagram" />
           <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="FarmaciaBModel.Store.sp_dropdiagram" />
@@ -660,6 +674,16 @@ advertencia 6002: La tabla o vista 'FarmaciaB.dbo.FARMACIA' no tiene definida ni
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="FarmaciaBModel.Store.sp_renamediagram" />
           <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="FarmaciaBModel.Store.sp_upgraddiagrams" />
+          <EntitySetMapping Name="FARMACIA">
+            <EntityTypeMapping TypeName="FarmaciaBModel.FARMACIA">
+              <MappingFragment StoreEntitySet="FARMACIA">
+                <ScalarProperty Name="PAGINA_WEB" ColumnName="PAGINA_WEB" />
+                <ScalarProperty Name="ATENCION_AL_CLIENTE" ColumnName="ATENCION_AL_CLIENTE" />
+                <ScalarProperty Name="NOMBRE_FARMACIA" ColumnName="NOMBRE_FARMACIA" />
+                <ScalarProperty Name="ID_FARMACIA" ColumnName="ID_FARMACIA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

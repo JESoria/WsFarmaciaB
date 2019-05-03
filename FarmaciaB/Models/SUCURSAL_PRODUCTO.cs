@@ -22,5 +22,6 @@ namespace FarmaciaB.Models
         public Nullable<decimal> PRECIO { get; set; }
     
         public virtual SUCURSAL SUCURSAL { get; set; }
+        public virtual PRODUCTO PRODUCTO { get; set; }
     }
 }
