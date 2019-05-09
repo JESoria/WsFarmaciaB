@@ -193,6 +193,25 @@
     <Parameter Name="lat2" Type="float" Mode="In" />
   </Function>
   <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+  <Function Name="nearby" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="producto" Type="varchar(max)" Mode="In" />
+    <Parameter Name="lonC" Type="varchar" Mode="In" />
+    <Parameter Name="latC" Type="varchar" Mode="In" />
+    <ReturnType>
+      <CollectionType>
+        <RowType>
+          <Property Name="SUCURSAL" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="ID_SUCURSAL" Type="int" Nullable="false" />
+          <Property Name="LATITUD" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="LONGITUD" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="DIRECCION" Type="varchar" MaxLength="256" Nullable="false" />
+          <Property Name="ID_SUCURSAL_PRODUCTO" Type="int" Nullable="false" />
+          <Property Name="PRODUCTO" Type="nvarchar(max)" />
+          <Property Name="PRECIO" Type="decimal" Precision="7" Scale="2" />
+        </RowType>
+      </CollectionType>
+    </ReturnType>
+  </Function>
   <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
     <Parameter Name="owner_id" Type="int" Mode="In" />

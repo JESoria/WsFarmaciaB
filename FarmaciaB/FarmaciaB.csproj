@@ -218,6 +218,9 @@
     <Compile Include="Models\LABORATORIO.cs">
       <DependentUpon>FarmaciaBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\nearby_Result.cs">
+      <DependentUpon>FarmaciaBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\PRESENTACION.cs">
       <DependentUpon>FarmaciaBModel.tt</DependentUpon>
     </Compile>

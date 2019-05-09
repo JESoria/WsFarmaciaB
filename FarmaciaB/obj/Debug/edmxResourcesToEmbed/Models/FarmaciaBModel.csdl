@@ -250,6 +250,11 @@
       <End Role="SUCURSAL_PRODUCTO" EntitySet="SUCURSAL_PRODUCTO" />
     </AssociationSet>
     <EntitySet Name="FARMACIA" EntityType="FarmaciaBModel.FARMACIA" />
+    <FunctionImport Name="nearby" IsComposable="true" ReturnType="Collection(FarmaciaBModel.nearby_Result)">
+      <Parameter Name="producto" Mode="In" Type="String" />
+      <Parameter Name="lonC" Mode="In" Type="String" />
+      <Parameter Name="latC" Mode="In" Type="String" />
+    </FunctionImport>
   </EntityContainer>
   <ComplexType Name="sp_helpdiagramdefinition_Result">
     <Property Type="Int32" Name="version" Nullable="true" />
@@ -283,4 +288,14 @@
     <Property Name="ATENCION_AL_CLIENTE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="PAGINA_WEB" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
   </EntityType>
+  <ComplexType Name="nearby_Result">
+    <Property Type="String" Name="SUCURSAL" Nullable="false" MaxLength="64" />
+    <Property Type="Int32" Name="ID_SUCURSAL" Nullable="false" />
+    <Property Type="String" Name="LATITUD" Nullable="false" MaxLength="128" />
+    <Property Type="String" Name="LONGITUD" Nullable="false" MaxLength="128" />
+    <Property Type="String" Name="DIRECCION" Nullable="false" MaxLength="256" />
+    <Property Type="Int32" Name="ID_SUCURSAL_PRODUCTO" Nullable="false" />
+    <Property Type="String" Name="PRODUCTO" Nullable="true" />
+    <Property Type="Decimal" Name="PRECIO" Nullable="true" Precision="7" Scale="2" />
+  </ComplexType>
 </Schema>

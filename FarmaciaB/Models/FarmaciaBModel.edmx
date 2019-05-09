@@ -198,6 +198,25 @@
           <Parameter Name="lat2" Type="float" Mode="In" />
         </Function>
         <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="nearby" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="producto" Type="varchar(max)" Mode="In" />
+          <Parameter Name="lonC" Type="varchar" Mode="In" />
+          <Parameter Name="latC" Type="varchar" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="SUCURSAL" Type="varchar" MaxLength="64" Nullable="false" />
+                <Property Name="ID_SUCURSAL" Type="int" Nullable="false" />
+                <Property Name="LATITUD" Type="varchar" MaxLength="128" Nullable="false" />
+                <Property Name="LONGITUD" Type="varchar" MaxLength="128" Nullable="false" />
+                <Property Name="DIRECCION" Type="varchar" MaxLength="256" Nullable="false" />
+                <Property Name="ID_SUCURSAL_PRODUCTO" Type="int" Nullable="false" />
+                <Property Name="PRODUCTO" Type="nvarchar(max)" />
+                <Property Name="PRECIO" Type="decimal" Precision="7" Scale="2" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
         <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
           <Parameter Name="owner_id" Type="int" Mode="In" />
@@ -525,6 +544,11 @@
             <End Role="SUCURSAL_PRODUCTO" EntitySet="SUCURSAL_PRODUCTO" />
           </AssociationSet>
           <EntitySet Name="FARMACIA" EntityType="FarmaciaBModel.FARMACIA" />
+          <FunctionImport Name="nearby" IsComposable="true" ReturnType="Collection(FarmaciaBModel.nearby_Result)">
+            <Parameter Name="producto" Mode="In" Type="String" />
+            <Parameter Name="lonC" Mode="In" Type="String" />
+            <Parameter Name="latC" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -558,6 +582,16 @@
           <Property Name="ATENCION_AL_CLIENTE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="PAGINA_WEB" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
+        <ComplexType Name="nearby_Result">
+          <Property Type="String" Name="SUCURSAL" Nullable="false" MaxLength="64" />
+          <Property Type="Int32" Name="ID_SUCURSAL" Nullable="false" />
+          <Property Type="String" Name="LATITUD" Nullable="false" MaxLength="128" />
+          <Property Type="String" Name="LONGITUD" Nullable="false" MaxLength="128" />
+          <Property Type="String" Name="DIRECCION" Nullable="false" MaxLength="256" />
+          <Property Type="Int32" Name="ID_SUCURSAL_PRODUCTO" Nullable="false" />
+          <Property Type="String" Name="PRODUCTO" Nullable="true" />
+          <Property Type="Decimal" Name="PRECIO" Nullable="true" Precision="7" Scale="2" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -684,6 +718,20 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="nearby" FunctionName="FarmaciaBModel.Store.nearby">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="FarmaciaBModel.nearby_Result">
+                <ScalarProperty Name="SUCURSAL" ColumnName="SUCURSAL" />
+                <ScalarProperty Name="ID_SUCURSAL" ColumnName="ID_SUCURSAL" />
+                <ScalarProperty Name="LATITUD" ColumnName="LATITUD" />
+                <ScalarProperty Name="LONGITUD" ColumnName="LONGITUD" />
+                <ScalarProperty Name="DIRECCION" ColumnName="DIRECCION" />
+                <ScalarProperty Name="ID_SUCURSAL_PRODUCTO" ColumnName="ID_SUCURSAL_PRODUCTO" />
+                <ScalarProperty Name="PRODUCTO" ColumnName="PRODUCTO" />
+                <ScalarProperty Name="PRECIO" ColumnName="PRECIO" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

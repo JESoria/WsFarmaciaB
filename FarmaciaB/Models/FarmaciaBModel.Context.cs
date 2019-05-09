@@ -139,5 +139,23 @@ namespace FarmaciaB.Models
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
         }
+    
+        [DbFunction("FarmaciaBEntities", "nearby")]
+        public virtual IQueryable<nearby_Result> nearby(string producto, string lonC, string latC)
+        {
+            var productoParameter = producto != null ?
+                new ObjectParameter("producto", producto) :
+                new ObjectParameter("producto", typeof(string));
+    
+            var lonCParameter = lonC != null ?
+                new ObjectParameter("lonC", lonC) :
+                new ObjectParameter("lonC", typeof(string));
+    
+            var latCParameter = latC != null ?
+                new ObjectParameter("latC", latC) :
+                new ObjectParameter("latC", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<nearby_Result>("[FarmaciaBEntities].[nearby](@producto, @lonC, @latC)", productoParameter, lonCParameter, latCParameter);
+        }
     }
 }
